@@ -1,10 +1,5 @@
 #include "mbed.h"
 #include "FastAnalogIn.h"
-// ADICIONAR UMA FITA NAS VIRADAS GRANDES PARA O CARRINHO MUDAR BSTT DE VELOCIDADE!
-
-// LED1 = mbed
-// LED3 = LPC1
-// > 0.03 e branco
 
 PwmOut servod(p22), servoe(p21);// pinos setados para saída em PWM para controle do Servo.
 FastAnalogIn sensor_e(p19), sensor_d(p18);// pinos setados para conversão interna do ADC.
@@ -24,9 +19,6 @@ void led( int l1, int l2, int l3, int l4);
 void fazer_curva(int &contador);
 // Funçao que mante o carro fazendo curva
 void fazendo_curva(float ValorE , float ValorD); //, int time = 300);
-
-//Serial pc(*USBTX, USBRX, 9600); // tx, rx
-// Usar: pc.printf( " SE : %f | SD: %f \n", ValorE, ValorD);
 
 int main(){
     float ValorE = 0, ValorD = 0;
@@ -71,17 +63,12 @@ void velocidade(float ValorE, float ValorD){
     // Envia o sinal
         servod.pulsewidth(-ValorD/100.0 * 0.0005 + 0.00138);
         servoe.pulsewidth( ValorE/100.0 * 0.0005 + 0.00144);
-        // 0.00194 esquerda RAPIDO
-        // 0.00144 esquerda PARA
-        // 0.00094 direita RAPIDO
-        // 0.00138 direita PARA
 }
 
 void velocidade( float &ValorE, float &ValorD, direcao dir){
     float inc = 10;
     switch(dir){
-        // D:70 / E:30 ficou bom
-        case(FRENTE):
+         case(FRENTE):
             ValorD = 60;
             ValorE = 90;
             break;
